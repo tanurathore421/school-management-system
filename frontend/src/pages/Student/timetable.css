@@ -1,0 +1,55 @@
+.student-timetable-page {
+  min-height: 100vh;
+  background: #f4f7fb;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.timetable-header {
+  margin-bottom: 30px;
+}
+
+.timetable-header h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: #172033;
+}
+
+.timetable-header p {
+  color: #64748b;
+}
+
+.timetable-container {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+}
+
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.timetable-table th,
+.timetable-table td {
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+
+.timetable-table th {
+  background: #eff6ff;
+  color: #172033;
+}
+
+.timetable-table td {
+  color: #475569;
+}
+
+.break {
+  background: #fef3c7;
+  font-weight: bold;
+}
