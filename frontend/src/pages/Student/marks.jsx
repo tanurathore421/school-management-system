@@ -1,19 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./marks.css";
 
 function Marks() {
+  const [marks, setMarks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getMarks = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/student/marks",
+          {
+            withCredentials: true,
+          }
+        );
+
+        setMarks(response.data);
+      } catch (error) {
+        console.error("Error fetching marks:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getMarks();
+  }, []);
+
+  if (loading) {
+    return <p>Loading marks...</p>;
+  }
+
   return (
     <div className="student-marks-page">
-
       <div className="student-marks-header">
         <h1>My Marks</h1>
         <p>View your unit test, assignment and mid-term marks.</p>
       </div>
 
       <div className="student-marks-table-container">
-
         <table className="student-marks-table">
-
           <thead>
             <tr>
               <th>Subject</th>
@@ -24,48 +50,23 @@ function Marks() {
           </thead>
 
           <tbody>
-
-            <tr>
-              <td>Mathematics</td>
-              <td>18 / 20</td>
-              <td>9 / 10</td>
-              <td>42 / 50</td>
-            </tr>
-
-            <tr>
-              <td>Science</td>
-              <td>16 / 20</td>
-              <td>10 / 10</td>
-              <td>39 / 50</td>
-            </tr>
-
-            <tr>
-              <td>English</td>
-              <td>19 / 20</td>
-              <td>9 / 10</td>
-              <td>44 / 50</td>
-            </tr>
-
-            <tr>
-              <td>Hindi</td>
-              <td>17 / 20</td>
-              <td>8 / 10</td>
-              <td>41 / 50</td>
-            </tr>
-
-            <tr>
-              <td>Computer</td>
-              <td>20 / 20</td>
-              <td>10 / 10</td>
-              <td>46 / 50</td>
-            </tr>
-
+            {marks.length > 0 ? (
+              marks.map((mark) => (
+                <tr key={mark._id}>
+                  <td>{mark.subject}</td>
+                  <td>{mark.unitTest}</td>
+                  <td>{mark.assignment}</td>
+                  <td>{mark.midTerm}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No marks available</td>
+              </tr>
+            )}
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }

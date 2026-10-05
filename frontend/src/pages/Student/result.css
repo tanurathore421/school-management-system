@@ -1,26 +1,29 @@
-.student-results-page {
-  min-height: 100vh;
-  background: #f4f7fb;
-  padding: 40px;
-  font-family: Arial, sans-serif;
+.student-result-page {
+  width: 100%;
 }
 
-.student-results-header {
-  margin-bottom: 30px;
+/* =========================
+   Header
+========================= */
+
+.student-result-header {
+  margin-bottom: 25px;
 }
 
-.student-results-header h1 {
+.student-result-header h1 {
   margin: 0 0 8px;
   font-size: 30px;
   color: #172033;
 }
 
-.student-results-header p {
+.student-result-header p {
   margin: 0;
   color: #64748b;
 }
 
-/* Summary */
+/* =========================
+   Summary Cards
+========================= */
 
 .result-summary {
   display: grid;
@@ -36,81 +39,99 @@
   box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
 }
 
-.result-card h2 {
-  margin: 0 0 10px;
-  font-size: 16px;
-  color: #64748b;
+.result-card h3 {
+  margin: 0 0 18px;
+  font-size: 18px;
+  color: #172033;
 }
 
 .result-card p {
   margin: 0;
   font-size: 25px;
-  font-weight: bold;
-  color: #172033;
+  font-weight: 600;
+  color: #172554;
 }
 
-.result-card .pass {
-  color: #15803d;
-}
+/* =========================
+   Result Table Container
+========================= */
 
-/* Table */
-
-.result-table-container {
+.student-result-table-container {
   background: white;
-  padding: 25px;
   border-radius: 12px;
+  overflow: hidden;
   box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
-  overflow-x: auto;
 }
 
-.result-table-container h2 {
-  margin: 0 0 20px;
-  font-size: 20px;
-  color: #172033;
-}
+/* =========================
+   Result Table
+========================= */
 
-.student-results-table {
+.student-result-table {
   width: 100%;
   border-collapse: collapse;
   min-width: 650px;
 }
 
-.student-results-table th,
-.student-results-table td {
-  padding: 16px;
+.student-result-table th,
+.student-result-table td {
+  padding: 15px 20px;
   text-align: left;
   border-bottom: 1px solid #e2e8f0;
 }
 
-.student-results-table th {
+/* Table Heading */
+
+.student-result-table th {
   background: #eff6ff;
   color: #172033;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.student-results-table td {
+/* Table Data */
+
+.student-result-table td {
   color: #475569;
   font-size: 14px;
 }
 
-.student-results-table tbody tr:hover {
+/* Hover */
+
+.student-result-table tbody tr:hover {
   background: #f8fafc;
 }
 
-/* Responsive */
+/* Last Row */
 
-@media (max-width: 900px) {
+.student-result-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 1000px) {
   .result-summary {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 600px) {
-  .student-results-page {
+  .result-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .student-result-header h1 {
+    font-size: 25px;
+  }
+
+  .result-card {
     padding: 20px;
   }
 
-  .result-summary {
-    grid-template-columns: 1fr;
+  .student-result-table-container {
+    overflow-x: auto;
   }
 }

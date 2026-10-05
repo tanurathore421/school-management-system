@@ -40,6 +40,30 @@ const userSchema = new mongoose.Schema(
         return this.role === "student";
       },
     },
+
+    phone: {
+      type: String,
+      trim: true,
+    },
+
+    fatherName: {
+      type: String,
+      trim: true,
+    },
+
+    motherName: {
+      type: String,
+      trim: true,
+    },
+
+    dateOfBirth: {
+      type: Date,
+    },
+
+    address: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,

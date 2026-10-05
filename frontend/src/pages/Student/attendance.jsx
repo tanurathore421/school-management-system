@@ -1,57 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./attendance.css";
 
 function Attendance() {
+  const [attendance, setAttendance] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAttendance = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/student/attendance",
+          {
+            withCredentials: true,
+          }
+        );
+
+        setAttendance(response.data);
+      } catch (error) {
+        console.error("Error fetching attendance:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getAttendance();
+  }, []);
+
+  const presentDays = attendance.filter(
+    (item) => item.status === "Present"
+  ).length;
+
+  const absentDays = attendance.filter(
+    (item) => item.status === "Absent"
+  ).length;
+
+  const totalDays = attendance.length;
+
+  const percentage =
+    totalDays > 0
+      ? Math.round((presentDays / totalDays) * 100)
+      : 0;
+
+  if (loading) {
+    return <p>Loading attendance...</p>;
+  }
+
   return (
     <div className="student-attendance-page">
-
       <div className="student-attendance-header">
-        <h1>Attendance</h1>
-        <p>View your monthly attendance record.</p>
+        <h1>My Attendance</h1>
+        <p>View your daily attendance record.</p>
       </div>
 
-      {/* Month */}
-      <div className="attendance-month">
-        <label>Month:</label>
-        <select>
-          <option>September 2026</option>
-          <option>August 2026</option>
-          <option>July 2026</option>
-        </select>
-      </div>
-
-      {/* Summary */}
       <div className="attendance-summary">
-
         <div className="attendance-card">
-          <h2>Present</h2>
-          <p>22 Days</p>
+          <h3>Present</h3>
+          <p>{presentDays} Days</p>
         </div>
 
         <div className="attendance-card">
-          <h2>Absent</h2>
-          <p>3 Days</p>
+          <h3>Absent</h3>
+          <p>{absentDays} Days</p>
         </div>
 
         <div className="attendance-card">
-          <h2>Total</h2>
-          <p>25 Days</p>
+          <h3>Total</h3>
+          <p>{totalDays} Days</p>
         </div>
 
         <div className="attendance-card">
-          <h2>Percentage</h2>
-          <p>88%</p>
+          <h3>Percentage</h3>
+          <p>{percentage}%</p>
         </div>
-
       </div>
 
-      {/* Attendance Table */}
-      <div className="attendance-table-container">
-
-        <h2>September 2026 Attendance</h2>
-
+      <div className="student-attendance-table-container">
         <table className="student-attendance-table">
-
           <thead>
             <tr>
               <th>Date</th>
@@ -61,49 +86,33 @@ function Attendance() {
           </thead>
 
           <tbody>
+            {attendance.length > 0 ? (
+              attendance.map((item) => (
+                <tr key={item._id}>
+                  <td>
+                    {new Date(item.date).toLocaleDateString()}
+                  </td>
 
-            <tr>
-              <td>01 Sep</td>
-              <td>Tuesday</td>
-              <td className="present">Present</td>
-            </tr>
+                  <td>
+                    {new Date(item.date).toLocaleDateString(
+                      "en-US",
+                      { weekday: "long" }
+                    )}
+                  </td>
 
-            <tr>
-              <td>02 Sep</td>
-              <td>Wednesday</td>
-              <td className="present">Present</td>
-            </tr>
-
-            <tr>
-              <td>03 Sep</td>
-              <td>Thursday</td>
-              <td className="absent">Absent</td>
-            </tr>
-
-            <tr>
-              <td>04 Sep</td>
-              <td>Friday</td>
-              <td className="present">Present</td>
-            </tr>
-
-            <tr>
-              <td>05 Sep</td>
-              <td>Saturday</td>
-              <td className="present">Present</td>
-            </tr>
-
-            <tr>
-              <td>07 Sep</td>
-              <td>Monday</td>
-              <td className="present">Present</td>
-            </tr>
-
+                  <td>{item.status}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">
+                  No attendance available
+                </td>
+              </tr>
+            )}
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }

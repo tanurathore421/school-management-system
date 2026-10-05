@@ -7,16 +7,25 @@ const jwt = require("jsonwebtoken");
 // =========================
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      className,
+      section,
+      phone,
+      fatherName,
+      motherName,
+      dateOfBirth,
+      address,
+    } = req.body;
 
-    // all fields are required
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !className || !section) {
       return res.status(400).json({
-        message: "Please fill all fields",
+        message: "Please fill all required fields",
       });
     }
 
-    // check if user already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -25,26 +34,39 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // create student
     const user = new User({
       name,
       email,
       password: hashedPassword,
       role: "student",
+      className,
+      section,
+      phone,
+      fatherName,
+      motherName,
+      dateOfBirth,
+      address,
     });
 
     await user.save();
 
     res.status(201).json({
       message: "Student registered successfully",
+
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
+        className: user.className,
+        section: user.section,
+        phone: user.phone,
+        fatherName: user.fatherName,
+        motherName: user.motherName,
+        dateOfBirth: user.dateOfBirth,
+        address: user.address,
       },
     });
   } catch (error) {
@@ -55,7 +77,6 @@ const registerUser = async (req, res) => {
     });
   }
 };
-
 // =========================
 // LOGIN USER
 // =========================
@@ -80,10 +101,7 @@ const loginUser = async (req, res) => {
     }
 
     // check password
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
       return res.status(400).json({
@@ -100,15 +118,15 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: "1d",
-      }
+      },
     );
 
-    // save token in cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       path: "/",
     });
 
@@ -177,7 +195,6 @@ const createAdmin = async (req, res) => {
 
     await user.save();
 
-
     res.status(201).json({
       message: "Admin created successfully",
       user: {
@@ -232,8 +249,6 @@ const createStaff = async (req, res) => {
 
     await user.save();
 
-   
-
     res.status(201).json({
       message: "Staff created successfully",
       user: {
@@ -253,6 +268,22 @@ const createStaff = async (req, res) => {
 };
 
 // =========================
+// LOGOUT USER
+// =========================
+const logoutUser = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  res.status(200).json({
+    message: "User logged out successfully",
+  });
+};
+
+// =========================
 // EXPORT
 // =========================
 module.exports = {
@@ -260,4 +291,5 @@ module.exports = {
   loginUser,
   createAdmin,
   createStaff,
+  logoutUser,
 };

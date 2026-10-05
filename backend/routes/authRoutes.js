@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser,loginUser,createAdmin,createStaff} = require("../controllers/authController");  
+const { registerUser,loginUser,createAdmin,createStaff, logoutUser} = require("../controllers/authController");  
 const authMiddleware = require("../middlewares/authMiddleware");
 const roleMiddleware = require("../middlewares/roleMiddleware");
 
@@ -8,15 +8,8 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/admin', createAdmin);
 router.post('/staff', createStaff);
+router.post("/logout", logoutUser);
 
-// Protected test route
-router.get("/profile", authMiddleware, (req, res) => {
-  res.status(200).json({
-    message: "You are authorized",
-    userId: req.user.userId,
-    role: req.user.role,
-  });
-});
 
 router.get('/admin', authMiddleware, roleMiddleware('admin'), (req, res) => {
   res.status(200).json({ message: 'Welcome, admin!' });

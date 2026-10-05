@@ -1,53 +1,12 @@
 import React from "react";
 import "./studentDashboard.css";
 
+
 function StudentDashboard() {
   return (
     <div className="student-layout">
-      {/* Sidebar */}
-      <aside className="student-sidebar">
-        <div className="school-logo">
-          <span>🏫</span>
-          <span>School Portal</span>
-        </div>
-
-        <nav className="student-nav">
-          <a href="/student" className="active">
-            <span>🏠</span>
-            Dashboard
-          </a>
-
-          <a href="/student/marks">
-            <span>📊</span>
-            Marks
-          </a>
-
-          <a href="/student/attendance">
-            <span>📅</span>
-            Attendance
-          </a>
-
-          <a href="/student/timetable">
-            <span>🕐</span>
-            Timetable
-          </a>
-
-          <a href="/student/result">
-            <span>📄</span>
-            Results
-          </a>
-
-          <a href="/student/notices">
-            <span>📢</span>
-            Notices
-          </a>
-        </nav>
-
-        <button className="logout-btn">
-          <span>🚪</span>
-          Logout
-        </button>
-      </aside>
+    
+   
 
       {/* Main Content */}
       <main className="student-main">

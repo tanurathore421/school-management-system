@@ -1,89 +1,159 @@
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./timetable.css";
 
 function Timetable() {
+  const [timetable, setTimetable] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const periods = [
+    "07:00 AM - 08:00 AM",
+    "08:00 AM - 09:00 AM",
+    "09:00 AM - 10:00 AM",
+    "10:00 AM - 11:00 AM",
+    "11:00 AM - 12:00 PM",
+    "12:00 PM - 01:00 PM",
+    "01:00 PM - 02:00 PM",
+    "02:00 PM - 03:00 PM",
+    "03:00 PM - 04:00 PM",
+    "04:00 PM - 05:00 PM",
+  ];
+
+  const getTimetable = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.get(
+        "http://localhost:3000/api/student/timetable",
+        {
+          withCredentials: true,
+        }
+      );
+
+      setTimetable(response.data);
+    } catch (error) {
+      console.error("Failed to fetch timetable:", error);
+      setTimetable([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getTimetable();
+  }, []);
+
+  const getSubject = (day, time) => {
+    const item = timetable.find(
+      (entry) =>
+        entry.day === day &&
+        entry.time === time
+    );
+
+    return item;
+  };
+
   return (
     <div className="student-timetable-page">
 
-      <div className="timetable-header">
-        <h1>Class Timetable</h1>
-        <p>View your weekly class schedule.</p>
+      {/* Header */}
+      <div className="student-timetable-header">
+        <div>
+          <h1>My Timetable</h1>
+          <p>View your weekly class timetable.</p>
+        </div>
+
+        <div className="student-timetable-icon">
+          🕐
+        </div>
       </div>
 
-      <div className="timetable-container">
+      {/* Timetable */}
+      <div className="student-weekly-timetable-container">
 
-        <table className="timetable-table">
+        <div className="student-weekly-timetable-header">
+          <h2>Weekly Timetable</h2>
+        </div>
 
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-            </tr>
-          </thead>
+        {loading ? (
+          <div className="student-timetable-loading">
+            Loading timetable...
+          </div>
+        ) : (
+          <div className="student-weekly-timetable-wrapper">
 
-          <tbody>
+            <table className="student-weekly-timetable">
 
-            <tr>
-              <td>09:00 - 10:00</td>
-              <td>Maths</td>
-              <td>English</td>
-              <td>Science</td>
-              <td>Maths</td>
-              <td>Computer</td>
-              <td>Hindi</td>
-            </tr>
+              <thead>
+                <tr>
+                  <th>Day</th>
 
-            <tr>
-              <td>10:00 - 11:00</td>
-              <td>Science</td>
-              <td>Maths</td>
-              <td>English</td>
-              <td>Computer</td>
-              <td>Science</td>
-              <td>Maths</td>
-            </tr>
+                  {periods.map((period) => (
+                    <th key={period}>
+                      {period.split(" - ")[0]}
+                      <small>
+                        {period.split(" - ")[1]}
+                      </small>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tr>
-              <td>11:00 - 11:30</td>
-              <td className="break">Break</td>
-              <td className="break">Break</td>
-              <td className="break">Break</td>
-              <td className="break">Break</td>
-              <td className="break">Break</td>
-              <td className="break">Break</td>
-            </tr>
+              <tbody>
 
-            <tr>
-              <td>11:30 - 12:30</td>
-              <td>Computer</td>
-              <td>Hindi</td>
-              <td>Maths</td>
-              <td>English</td>
-              <td>Science</td>
-              <td>Computer</td>
-            </tr>
+                {days.map((day) => (
+                  <tr key={day}>
 
-            <tr>
-              <td>12:30 - 01:30</td>
-              <td>English</td>
-              <td>Science</td>
-              <td>Computer</td>
-              <td>Hindi</td>
-              <td>Maths</td>
-              <td>Sports</td>
-            </tr>
+                    <td className="student-day-column">
+                      <strong>{day}</strong>
+                    </td>
 
-          </tbody>
+                    {periods.map((period) => {
 
-        </table>
+                      const item = getSubject(
+                        day,
+                        period
+                      );
+
+                      return (
+                        <td key={period}>
+
+                          {item ? (
+                            <div className="student-subject-cell">
+                              <strong>
+                                {item.subject}
+                              </strong>
+                            </div>
+                          ) : (
+                            <span className="empty-period">
+                              -
+                            </span>
+                          )}
+
+                        </td>
+                      );
+                    })}
+
+                  </tr>
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+        )}
 
       </div>
-
     </div>
   );
 }

@@ -1,101 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./result.css";
 
 function Result() {
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getResult = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/student/result",
+          {
+            withCredentials: true,
+          }
+        );
+
+        setResults(response.data);
+      } catch (error) {
+        console.error("Error fetching result:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getResult();
+  }, []);
+
+  const totalMarks = results.reduce(
+    (total, item) => total + item.obtainedMarks,
+    0
+  );
+
+  const maximumMarks = results.reduce(
+    (total, item) => total + item.maximumMarks,
+    0
+  );
+
+  const percentage =
+    maximumMarks > 0
+      ? Math.round((totalMarks / maximumMarks) * 100)
+      : 0;
+
+  if (loading) {
+    return <p>Loading result...</p>;
+  }
+
   return (
-    <div className="student-results-page">
-
-      <div className="student-results-header">
+    <div className="student-result-page">
+      <div className="student-result-header">
         <h1>My Result</h1>
-        <p>View your final examination result and overall performance.</p>
+        <p>View your final examination result.</p>
       </div>
 
-      {/* Result Summary */}
+      {results.length > 0 ? (
+        <>
+          <div className="result-summary">
+            <div className="result-card">
+              <h3>Total Marks</h3>
+              <p>
+                {totalMarks} / {maximumMarks}
+              </p>
+            </div>
 
-      <div className="result-summary">
+            <div className="result-card">
+              <h3>Percentage</h3>
+              <p>{percentage}%</p>
+            </div>
 
-        <div className="result-card">
-          <h2>Total Marks</h2>
-          <p>425 / 500</p>
-        </div>
+            <div className="result-card">
+              <h3>Grade</h3>
+              <p>{results[0].grade}</p>
+            </div>
 
-        <div className="result-card">
-          <h2>Percentage</h2>
-          <p>85%</p>
-        </div>
+            <div className="result-card">
+              <h3>Status</h3>
+              <p>Pass</p>
+            </div>
+          </div>
 
-        <div className="result-card">
-          <h2>Grade</h2>
-          <p>A</p>
-        </div>
+          <div className="student-result-table-container">
+            <table className="student-result-table">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Maximum Marks</th>
+                  <th>Obtained Marks</th>
+                  <th>Grade</th>
+                </tr>
+              </thead>
 
-        <div className="result-card">
-          <h2>Result</h2>
-          <p className="pass">Pass</p>
-        </div>
-
-      </div>
-
-      {/* Final Examination Table */}
-
-      <div className="result-table-container">
-
-        <h2>Final Examination - 2026</h2>
-
-        <table className="student-results-table">
-
-          <thead>
-            <tr>
-              <th>Subject</th>
-              <th>Maximum Marks</th>
-              <th>Obtained Marks</th>
-              <th>Grade</th>
-            </tr>
-          </thead>
-
-          <tbody>
-
-            <tr>
-              <td>Mathematics</td>
-              <td>100</td>
-              <td>85</td>
-              <td>A</td>
-            </tr>
-
-            <tr>
-              <td>Science</td>
-              <td>100</td>
-              <td>78</td>
-              <td>B+</td>
-            </tr>
-
-            <tr>
-              <td>English</td>
-              <td>100</td>
-              <td>88</td>
-              <td>A</td>
-            </tr>
-
-            <tr>
-              <td>Hindi</td>
-              <td>100</td>
-              <td>82</td>
-              <td>A</td>
-            </tr>
-
-            <tr>
-              <td>Computer</td>
-              <td>100</td>
-              <td>92</td>
-              <td>A+</td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
+              <tbody>
+                {results.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.subject}</td>
+                    <td>{item.maximumMarks}</td>
+                    <td>{item.obtainedMarks}</td>
+                    <td>{item.grade}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : (
+        <p>No result available</p>
+      )}
     </div>
   );
 }
