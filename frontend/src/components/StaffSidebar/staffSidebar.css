@@ -1,12 +1,25 @@
 .staff-common-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
   width: 250px;
+  height: 100vh;
   min-height: 100vh;
+
   background: #172554;
   color: white;
+
   padding: 25px 15px;
+
   display: flex;
   flex-direction: column;
+
   box-sizing: border-box;
+
+  z-index: 1000;
+
+  overflow-y: auto;
 }
 
 .staff-common-logo {
@@ -74,10 +87,24 @@
   width: 25px;
 }
 
+
+/* MAIN STAFF CONTENT */
+
+.staff-common-main {
+  margin-left: 250px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+
+/* MOBILE */
+
 @media (max-width: 650px) {
   .staff-common-sidebar {
     width: 100%;
+    height: auto;
     min-height: auto;
+    position: relative;
   }
 
   .staff-common-nav {
@@ -87,5 +114,9 @@
 
   .staff-common-logout {
     margin-top: 15px;
+  }
+
+  .staff-common-main {
+    margin-left: 0;
   }
 }

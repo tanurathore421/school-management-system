@@ -4,6 +4,7 @@ import "./attendance.css";
 
 function Attendance() {
   const [attendance, setAttendance] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState("2026-10");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,15 +28,25 @@ function Attendance() {
     getAttendance();
   }, []);
 
-  const presentDays = attendance.filter(
+  // Selected month ki attendance
+  const monthlyAttendance = attendance.filter((item) => {
+    const date = new Date(item.date);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+
+    return `${year}-${month}` === selectedMonth;
+  });
+
+  const presentDays = monthlyAttendance.filter(
     (item) => item.status === "Present"
   ).length;
 
-  const absentDays = attendance.filter(
+  const absentDays = monthlyAttendance.filter(
     (item) => item.status === "Absent"
   ).length;
 
-  const totalDays = attendance.length;
+  const totalDays = monthlyAttendance.length;
 
   const percentage =
     totalDays > 0
@@ -48,12 +59,29 @@ function Attendance() {
 
   return (
     <div className="student-attendance-page">
+
+      {/* HEADER */}
       <div className="student-attendance-header">
-        <h1>My Attendance</h1>
-        <p>View your daily attendance record.</p>
+        <div>
+          <h1>My Attendance</h1>
+          <p>View your monthly attendance record.</p>
+        </div>
+
+        {/* MONTH PICKER */}
+        <div className="attendance-month-selector">
+          <label>Select Month</label>
+
+          <input
+            type="month"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          />
+        </div>
       </div>
 
+      {/* SUMMARY */}
       <div className="attendance-summary">
+
         <div className="attendance-card">
           <h3>Present</h3>
           <p>{presentDays} Days</p>
@@ -73,10 +101,13 @@ function Attendance() {
           <h3>Percentage</h3>
           <p>{percentage}%</p>
         </div>
+
       </div>
 
+      {/* ATTENDANCE TABLE */}
       <div className="student-attendance-table-container">
         <table className="student-attendance-table">
+
           <thead>
             <tr>
               <th>Date</th>
@@ -86,9 +117,10 @@ function Attendance() {
           </thead>
 
           <tbody>
-            {attendance.length > 0 ? (
-              attendance.map((item) => (
+            {monthlyAttendance.length > 0 ? (
+              monthlyAttendance.map((item) => (
                 <tr key={item._id}>
+
                   <td>
                     {new Date(item.date).toLocaleDateString()}
                   </td>
@@ -96,23 +128,28 @@ function Attendance() {
                   <td>
                     {new Date(item.date).toLocaleDateString(
                       "en-US",
-                      { weekday: "long" }
+                      {
+                        weekday: "long",
+                      }
                     )}
                   </td>
 
                   <td>{item.status}</td>
+
                 </tr>
               ))
             ) : (
               <tr>
                 <td colSpan="3">
-                  No attendance available
+                  No attendance available for this month.
                 </td>
               </tr>
             )}
           </tbody>
+
         </table>
       </div>
+
     </div>
   );
 }

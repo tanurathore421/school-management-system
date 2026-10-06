@@ -7,6 +7,8 @@ const authRoutes = require('./routes/authRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const staffRoutes = require('./routes/staffRoutes');
 
+const adminRoutes = require('./routes/adminRoutes');
+
 
 
 
@@ -25,8 +27,10 @@ connectDB();
 app.use('/api/auth', authRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/staff", staffRoutes);
+app.use("/api/admin", adminRoutes);
 
-const PORT=process.env.PORT || 5000;
-app.listen( PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });

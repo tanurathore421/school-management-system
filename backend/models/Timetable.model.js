@@ -10,6 +10,8 @@ const timetableSchema = new mongoose.Schema(
     section: {
       type: String,
       required: true,
+      uppercase: true,
+      trim: true,
     },
 
     day: {
@@ -24,6 +26,12 @@ const timetableSchema = new mongoose.Schema(
 
     subject: {
       type: String,
+      required: true,
+    },
+
+    teacher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },

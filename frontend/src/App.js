@@ -5,6 +5,15 @@ import Login from "./pages/Login/login";
 import Register from "./pages/Register/register";
 
 import AdminDashboard from "./pages/Admin/adminDashboard";
+import AdminProtectedRoute from "./components/adminProtectedRoute";
+import AdminLayout from "./components/Layout/adminLayout";
+import AdminStudents from "./pages/Admin/students";
+import AdminStaff from "./pages/Admin/staff";
+import AdminAttendance from "./pages/Admin/adminAttendance";
+import AdminMarks from "./pages/Admin/adminMarks";
+import AdminResults from "./pages/Admin/results";
+import AdminNotices from "./pages/Admin/notices";
+import AdminTimetable from "./pages/Admin/timetable";
 
 import StaffDashboard from "./pages/Staff/staffDashboard";
 import StaffProtectedRoute from "./components/staffProtectedRoute";
@@ -15,6 +24,8 @@ import StaffMarks from "./pages/Staff/marks";
 import StaffTimetable from "./pages/Staff/timetable";
 import StaffNotices from "./pages/Staff/notice";
 import StaffResults from "./pages/Staff/results";
+import AddStaff from "./pages/Admin/addStaff";
+import EditStaff from "./pages/Admin/editStaff";
 
 import StudentLayout from "./components/Layout/studentLayout";
 import StudentDashboard from "./pages/Student/studentDashboard";
@@ -23,6 +34,7 @@ import Marks from "./pages/Student/marks";
 import Attendance from "./pages/Student/attendance";
 import Timetable from "./pages/Student/timetable";
 import Result from "./pages/Student/result";
+import StudentProtectedRoute from "./components/studentProtectedRoute";
 
 function App() {
   return (
@@ -36,7 +48,25 @@ function App() {
 
         {/* Admin */}
 
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout />
+            </AdminProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="students" element={<AdminStudents />} />
+          <Route path="staff" element={<AdminStaff />} />
+          <Route path="staff/add" element={<AddStaff />} />
+          <Route path="staff/edit/:id" element={<EditStaff />} />
+          <Route path="attendance" element={<AdminAttendance />} />
+          <Route path="marks" element={<AdminMarks />} />
+          <Route path="results" element={<AdminResults />} />
+          <Route path="notices" element={<AdminNotices />} />
+          <Route path="timetable" element={<AdminTimetable />} />
+        </Route>
 
         {/* Staff */}
 
@@ -59,7 +89,14 @@ function App() {
 
         {/* Student */}
 
-        <Route path="/student" element={<StudentLayout />}>
+        <Route
+          path="/student"
+          element={
+            <StudentProtectedRoute>
+              <StudentLayout />
+            </StudentProtectedRoute>
+          }
+        >
           <Route index element={<StudentDashboard />} />
           <Route path="marks" element={<Marks />} />
           <Route path="attendance" element={<Attendance />} />

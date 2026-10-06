@@ -7,6 +7,7 @@
 .staff-main {
   flex: 1;
   min-width: 0;
+  margin-left: 250px;
   padding: 30px;
   background: #f4f7fb;
   box-sizing: border-box;

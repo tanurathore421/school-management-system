@@ -68,15 +68,11 @@ const getStudentAttendance = async (req, res) => {
 // Mark attendance
 const markAttendance = async (req, res) => {
   try {
-    const {
-      student,
-      date,
-      status,
-    } = req.body;
+    const { student, date, status } = req.body;
 
     if (!student || !date || !status) {
       return res.status(400).json({
-        message: "Please fill all attendance fields",
+        message: "Please fill all required fields",
       });
     }
 
@@ -85,17 +81,24 @@ const markAttendance = async (req, res) => {
       date,
     });
 
+    // Attendance already exists → update it
     if (existingAttendance) {
       existingAttendance.status = status;
 
       await existingAttendance.save();
 
+      const updatedAttendance = await existingAttendance.populate(
+        "student",
+        "name email className section"
+      );
+
       return res.status(200).json({
         message: "Attendance updated successfully",
-        attendance: existingAttendance,
+        attendance: updatedAttendance,
       });
     }
 
+    // Attendance doesn't exist → create it
     const attendance = new Attendance({
       student,
       date,
@@ -104,19 +107,23 @@ const markAttendance = async (req, res) => {
 
     await attendance.save();
 
-    res.status(201).json({
+    const populatedAttendance = await attendance.populate(
+      "student",
+      "name email className section"
+    );
+
+    return res.status(201).json({
       message: "Attendance marked successfully",
-      attendance,
+      attendance: populatedAttendance,
     });
   } catch (error) {
-    console.error(error);
+    console.error("STAFF STUDENT ATTENDANCE ERROR:", error);
 
     res.status(500).json({
-      message: "Server error",
+      message: error.message,
     });
   }
 };
-
 
 // =====================================================
 // MARKS

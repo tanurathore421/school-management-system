@@ -19,8 +19,11 @@ router.get('/staff', authMiddleware, roleMiddleware('staff'), (req, res) => {
   res.status(200).json({ message: 'Welcome, staff!' });
 });
 
-router.get('/student', authMiddleware, roleMiddleware('student'), (req, res) => {
-  res.status(200).json({ message: 'Welcome, student!' });
+router.get("/student", authMiddleware, roleMiddleware("student"), (req, res) => {
+  res.status(200).json({
+    message: "Welcome, student!",
+    user: req.user,
+  });
 });
 
 module.exports = router;
