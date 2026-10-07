@@ -1,3 +1,12 @@
+const dns = require("dns");
+
+dns.setServers([
+    "8.8.8.8",
+    "1.1.1.1"
+]);
+
+
+
 const cookieParser = require('cookie-parser');
 const express = require('express');
 require('dotenv').config();
@@ -32,5 +41,5 @@ app.use("/api/admin", adminRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
