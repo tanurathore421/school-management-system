@@ -25,8 +25,11 @@ const app=express();
 
 app.use(express.json());
 app.use(
-  cors({
-    origin:  "https://school-management-system-blue-iota.vercel.app",
+      cors({
+    origin: [
+      "http://localhost:3001",
+      "https://school-management-system-blue-iota.vercel.app",
+    ],
     credentials: true,
   })
 );

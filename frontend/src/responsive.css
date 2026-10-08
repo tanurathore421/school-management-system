@@ -1,0 +1,351 @@
+/* =========================================================
+   GLOBAL RESPONSIVE CSS
+   School Management System
+   ========================================================= */
+
+/* ---------- GLOBAL ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+table {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   TABLET
+   768px AND BELOW
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* ---------- GENERAL CONTAINERS ---------- */
+
+  .container,
+  .content,
+  .main-content,
+  .page-content,
+  .dashboard-content {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+
+  /* ---------- HEADINGS ---------- */
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  h3 {
+    font-size: 19px;
+  }
+
+
+  /* ---------- DASHBOARD CARDS ---------- */
+
+  .dashboard-cards,
+  .cards-container,
+  .card-container,
+  .stats-container,
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+
+  /* ---------- FLEX CONTAINERS ---------- */
+
+  .row,
+  .flex-row {
+    flex-wrap: wrap;
+  }
+
+
+  /* ---------- FORMS ---------- */
+
+  form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+
+  /* ---------- TABLE ---------- */
+
+  .table-container,
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+
+  /* ---------- BUTTONS ---------- */
+
+  button {
+    max-width: 100%;
+  }
+
+
+  /* ---------- IMAGES ---------- */
+
+  .profile-image,
+  .user-image {
+    max-width: 100%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   480px AND BELOW
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  /* ---------- GENERAL ---------- */
+
+  body {
+    font-size: 14px;
+  }
+
+  .container,
+  .content,
+  .main-content,
+  .page-content,
+  .dashboard-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+
+  /* ---------- HEADINGS ---------- */
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  h3 {
+    font-size: 17px;
+  }
+
+
+  /* ---------- DASHBOARD CARDS ---------- */
+
+  .dashboard-cards,
+  .cards-container,
+  .card-container,
+  .stats-container,
+  .stats-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+
+  /* ---------- CARDS ---------- */
+
+  .card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+
+  /* ---------- FLEX ---------- */
+
+  .row,
+  .flex-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+
+  /* ---------- FORMS ---------- */
+
+  form {
+    width: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    font-size: 14px;
+  }
+
+
+  /* ---------- BUTTONS ---------- */
+
+  button {
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+
+  /* ---------- TABLE ---------- */
+
+  .table-container,
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+
+  /* ---------- NAVIGATION ---------- */
+
+  nav {
+    max-width: 100%;
+  }
+
+
+  /* ---------- MODALS ---------- */
+
+  .modal,
+  .modal-content {
+    width: calc(100% - 20px);
+    max-width: 100%;
+    margin: 10px;
+  }
+
+
+  /* ---------- LOGIN / REGISTER ---------- */
+
+  .login-container,
+  .register-container,
+  .login-box,
+  .register-box {
+    width: calc(100% - 20px);
+    max-width: 100%;
+    margin: 10px auto;
+  }
+
+
+  /* ---------- IMAGES ---------- */
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   360px AND BELOW
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  body {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  .container,
+  .content,
+  .main-content,
+  .page-content,
+  .dashboard-content {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  button {
+    font-size: 13px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   PREVENT HORIZONTAL OVERFLOW
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .dashboard,
+  .layout,
+  .page,
+  .content-area,
+  .main-area {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  pre,
+  code {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+}
