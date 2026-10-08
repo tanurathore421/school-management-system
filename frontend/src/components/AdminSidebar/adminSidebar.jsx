@@ -9,7 +9,7 @@ function AdminSidebar() {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/api/auth/logout",
+        "https://school-management-system-f6ya.onrender.com/api/auth/logout",
         {},
         {
           withCredentials: true,

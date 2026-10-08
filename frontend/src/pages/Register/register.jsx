@@ -19,7 +19,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "https://school-management-system-f6ya.onrender.com/api/auth/register",
         {
           name,
           email,

@@ -33,7 +33,7 @@ function Timetable() {
       setLoading(true);
 
       const response = await axios.get(
-        "http://localhost:3000/api/student/timetable",
+        "https://school-management-system-f6ya.onrender.com/api/student/timetable",
         {
           withCredentials: true,
         }

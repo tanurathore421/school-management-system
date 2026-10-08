@@ -10,7 +10,7 @@ function Result() {
     const getResult = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/student/result",
+          "https://school-management-system-f6ya.onrender.com/api/student/result",
           {
             withCredentials: true,
           }

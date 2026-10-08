@@ -7,7 +7,7 @@ function StaffProtectedRoute({ children }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/auth/staff", {
+      .get("https://school-management-system-f6ya.onrender.com/api/auth/staff", {
         withCredentials: true,
       })
       .then(() => setAllowed(true))

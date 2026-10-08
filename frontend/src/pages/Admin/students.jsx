@@ -9,7 +9,7 @@ function Students() {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/admin/students",
+        "https://school-management-system-f6ya.onrender.com/api/admin/students",
         {
           withCredentials: true,
         }

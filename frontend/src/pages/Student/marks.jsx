@@ -10,7 +10,7 @@ function Marks() {
     const getMarks = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/student/marks",
+          "https://school-management-system-f6ya.onrender.com/api/student/marks",
           {
             withCredentials: true,
           }

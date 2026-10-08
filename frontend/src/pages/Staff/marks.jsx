@@ -21,7 +21,7 @@ function Marks() {
       setLoading(true);
 
       const response = await axios.get(
-        `http://localhost:3000/api/staff/students?className=${selectedClass}&section=${selectedSection}`,
+        `https://school-management-system-f6ya.onrender.com/api/staff/students?className=${selectedClass}&section=${selectedSection}`,
         {
           withCredentials: true,
         }
@@ -63,7 +63,7 @@ function Marks() {
       const studentMarks = marks[student._id];
 
       await axios.post(
-        "http://localhost:3000/api/staff/marks",
+        "https://school-management-system-f6ya.onrender.com/api/staff/marks",
         {
           student: student._id,
           subject: selectedSubject,

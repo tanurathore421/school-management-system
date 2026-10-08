@@ -12,7 +12,7 @@ function Staff() {
   const fetchStaff = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/admin/staff",
+        "https://school-management-system-f6ya.onrender.com/api/admin/staff",
         {
           withCredentials: true,
         },
@@ -46,7 +46,7 @@ function Staff() {
 
   try {
     await axios.delete(
-      `http://localhost:3000/api/admin/staff/${id}`,
+      `https://school-management-system-f6ya.onrender.com/api/admin/staff/${id}`,
       {
         withCredentials: true,
       }

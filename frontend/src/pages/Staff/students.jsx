@@ -20,7 +20,7 @@ function Students() {
       setSelectedStudent(null);
 
       const response = await axios.get(
-        `http://localhost:3000/api/staff/students?className=${selectedClass}&section=${selectedSection}`,
+        `https://school-management-system-f6ya.onrender.com/api/staff/students?className=${selectedClass}&section=${selectedSection}`,
         {
           withCredentials: true,
         }
