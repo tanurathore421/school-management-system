@@ -18,8 +18,6 @@ function Results() {
 
   const [results, setResults] = useState([]);
 
-  const [loading, setLoading] = useState(false);
-
   const loadStudents = async () => {
     if (!selectedClass || !selectedSection) {
       alert("Please select class and section");
@@ -27,8 +25,6 @@ function Results() {
     }
 
     try {
-      setLoading(true);
-
       const response = await axios.get(
         `https://school-management-system-f6ya.onrender.com/api/staff/students?className=${selectedClass}&section=${selectedSection}`,
         {
@@ -42,8 +38,6 @@ function Results() {
     } catch (error) {
       console.error("Failed to load students:", error);
       setStudents([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -72,7 +66,6 @@ function Results() {
     const studentId = e.target.value;
 
     setSelectedStudent(studentId);
-
     loadResults(studentId);
   };
 
@@ -150,9 +143,7 @@ function Results() {
 
           <select
             value={selectedClass}
-            onChange={(e) =>
-              setSelectedClass(e.target.value)
-            }
+            onChange={(e) => setSelectedClass(e.target.value)}
           >
             <option value="">Select Class</option>
             <option value="9">9</option>
@@ -167,9 +158,7 @@ function Results() {
 
           <select
             value={selectedSection}
-            onChange={(e) =>
-              setSelectedSection(e.target.value)
-            }
+            onChange={(e) => setSelectedSection(e.target.value)}
           >
             <option value="">Select Section</option>
             <option value="A">A</option>
@@ -221,25 +210,13 @@ function Results() {
 
                 <select
                   value={subject}
-                  onChange={(e) =>
-                    setSubject(e.target.value)
-                  }
+                  onChange={(e) => setSubject(e.target.value)}
                 >
-                  <option value="">
-                    Select Subject
-                  </option>
-                  <option value="English">
-                    English
-                  </option>
-                  <option value="Mathematics">
-                    Mathematics
-                  </option>
-                  <option value="Science">
-                    Science
-                  </option>
-                  <option value="Computer">
-                    Computer
-                  </option>
+                  <option value="">Select Subject</option>
+                  <option value="English">English</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Science">Science</option>
+                  <option value="Computer">Computer</option>
                 </select>
               </div>
 
@@ -276,13 +253,9 @@ function Results() {
 
                 <select
                   value={grade}
-                  onChange={(e) =>
-                    setGrade(e.target.value)
-                  }
+                  onChange={(e) => setGrade(e.target.value)}
                 >
-                  <option value="">
-                    Select Grade
-                  </option>
+                  <option value="">Select Grade</option>
                   <option value="A+">A+</option>
                   <option value="A">A</option>
                   <option value="B+">B+</option>
@@ -299,9 +272,7 @@ function Results() {
                 <input
                   type="text"
                   value={exam}
-                  onChange={(e) =>
-                    setExam(e.target.value)
-                  }
+                  onChange={(e) => setExam(e.target.value)}
                 />
               </div>
 
@@ -311,9 +282,7 @@ function Results() {
                 <input
                   type="number"
                   value={year}
-                  onChange={(e) =>
-                    setYear(e.target.value)
-                  }
+                  onChange={(e) => setYear(e.target.value)}
                 />
               </div>
             </div>
