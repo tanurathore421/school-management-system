@@ -27,9 +27,11 @@ app.use(express.json());
 app.use(
       cors({
     origin: [
-      "http://localhost:3001",
-      "https://school-management-system-blue-iota.vercel.app",
-    ],
+"http://localhost:3001",
+"https://school-management-system-blue-iota.vercel.app",
+"https://school-management-system-git-main-tanus-projects-244133c9.vercel.app",
+"https://school-management-system-gjkss3vgj-tanus-projects-244133c9.vercel.app"
+],
     credentials: true,
   })
 );
